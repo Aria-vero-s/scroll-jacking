@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scroll-Jacking Project Section</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    section.hero {
+      height: 100vh;
+      background-color: aliceblue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-lock-wrapper {
+      position: relative;
+      height: 300vh; /* total scroll area */
+    }
+
+    .scroll-section {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background-color: white;
+    }
+
+    .image-container {
+      width: 50%;
+      position: relative;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-container img {
+      width: 80%;
+      height: auto;
+    }
+
+    .text-container {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .text-scroll {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: transform 0.3s ease-out;
+    }
+
+    .paragraph {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .paragraph p {
+      max-width: 500px;
+      font-size: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Welcome</h1>
+</section>
+
+<!-- Scroll-Jacking Section -->
+<div class="scroll-lock-wrapper" id="scrollLockWrapper">
+  <div class="scroll-section">
+    <div class="image-container">
+      <img id="projectImage" src="mockup1.jpg" alt="Project Image" />
+    </div>
+    <div class="text-container">
+      <div class="text-scroll" id="textScroll">
+        <div class="paragraph"><p>This is the first project paragraph. It explains the start of the idea and sets the tone.</p></div>
+        <div class="paragraph"><p>Here is more information in paragraph 2. The image now shifts to reflect this part of the story.</p></div>
+        <div class="paragraph"><p>Finally, paragraph 3 wraps up the project. After this, the scroll continues naturally.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="hero" style="background: lavender;">
+  <h1>Next Section</h1>
+</section>
+
+<script>
+  const wrapper = document.getElementById('scrollLockWrapper');
+  const textScroll = document.getElementById('textScroll');
+  const image = document.getElementById('projectImage');
+  const paragraphs = textScroll.children;
+  const totalParagraphs = paragraphs.length;
+  const paragraphHeight = window.innerHeight;
+
+  const images = ['mockup1.jpg', 'mockup2.jpg', 'mockup3.jpg'];
+
+  window.addEventListener('scroll', () => {
+  const wrapperRect = wrapper.getBoundingClientRect();
+  const wrapperHeight = wrapper.offsetHeight;
+
+  if (wrapperRect.top <= 0 && wrapperRect.bottom > window.innerHeight) {
+    const scrollDistance = -wrapperRect.top;
+    const scrollPercent = scrollDistance / (wrapperHeight - window.innerHeight);
+
+    // Scroll the text
+    textScroll.style.transform = `translateY(-${scrollDistance}px)`;
+
+    // Calculate image index based on percent
+    let index = Math.floor(scrollPercent * totalParagraphs);
+
+    // Clamp to last image
+    if (index >= totalParagraphs) index = totalParagraphs - 1;
+
+    image.src = images[index];
+  }
+});
+
+</script>
+
+</body>
+</html>
