@@ -6,6 +6,8 @@ This project demonstrates a scroll-jacking effect, where the default scrolling b
 
 Check out the live demo here: [Scroll-Jacking Effect](https://aria-vero-s.github.io/scroll-jacking/)
 
+Inspiration: [Squarespace](https://www.squarespace.com/websites/create-a-portfolio/?channel=pnb&subchannel=go&campaign=pnb-go-fr-en-core_verticals-phr&subcampaign=(portfolio-en_portfolio-design_phr)&gclsrc=aw.ds&gad_source=1&gclid=CjwKCAjwn6LABhBSEiwAsNJrjrM-K9sJ6Sk08z4P-RodqeLuN6JFNoj6kymFq-iR4Z74XMuwxPCVmxoCXQwQAvD_BwE)
+
 ## Features
 
 - Custom scrolling behavior
