@@ -1,102 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js"></script>
 	<title>Scroll-Jacking Project Section</title>
-	<style>
-		html,
-		body {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			font-family: Arial, sans-serif;
-		}
-
-		section.hero {
-			height: 100vh;
-			background-color: aliceblue;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.scroll-lock-wrapper {
-			position: relative;
-			height: 250vh; /* total scroll area */
-		}
-
-		.scroll-section {
-			position: sticky;
-			top: 0;
-			height: 100vh;
-			display: flex;
-			overflow: hidden;
-			background-color: #f0f0f0;
-		}
-
-		.image-container {
-			width: 50%;
-			position: relative;
-			background-color: #fff;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-
-		.image-container img {
-			width: 80%;
-			height: auto;
-		}
-
-		.text-container {
-			width: 50%;
-			height: 100%;
-			overflow: hidden;
-			position: relative;
-		}
-
-		.text-scroll {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			padding-top: 20vh;
-			padding-bottom: 40vh;
-			transition: transform 0.3s ease-out;
-		}
-
-		.paragraph {
-			height: 60vh; /* smaller than full screen to peek others */
-			flex-shrink: 0;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			padding: 0 20px;
-			box-sizing: border-box;
-		}
-
-
-		.paragraph p {
-			max-width: 500px;
-			font-size: 24px;
-			line-height: 1.6;
-		}
-	</style>
 </head>
-
 <body>
-
 	<section class="hero">
 		<h1>Welcome</h1>
 	</section>
-
 	<!-- Scroll-Jacking Section -->
 	<div class="scroll-lock-wrapper" id="scrollLockWrapper">
 		<div class="scroll-section">
 			<div class="image-container">
-				<img id="projectImage" src="mockup1.jpg" alt="Project Image" />
+				<img id="projectImage1" src="mockup1.jpg" alt="Project Image" class="active" />
+				<img id="projectImage2" src="" alt="Project Image" />
 			</div>
 			<div class="text-container">
 				<div class="text-scroll" id="textScroll">
@@ -115,48 +35,8 @@
 			</div>
 		</div>
 	</div>
-
 	<section class="hero" style="background: lavender;">
 		<h1>Next Section</h1>
 	</section>
-
-	<script>
-		const wrapper = document.getElementById('scrollLockWrapper');
-		const textScroll = document.getElementById('textScroll');
-		const image = document.getElementById('projectImage');
-		const paragraphs = textScroll.children;
-		const totalParagraphs = paragraphs.length;
-		const paragraphHeight = window.innerHeight;
-
-		const images = ['mockup1.jpg', 'mockup2.jpg', 'mockup3.jpg'];
-
-		window.addEventListener('scroll', () => {
-			const wrapperRect = wrapper.getBoundingClientRect();
-			const containerHeight = document.querySelector('.text-container').offsetHeight;
-			const scrollContentHeight = textScroll.scrollHeight;
-			const maxScroll = scrollContentHeight - containerHeight;
-
-			if (wrapperRect.top <= 0 && wrapperRect.bottom > window.innerHeight) {
-				let scrollDistance = -wrapperRect.top;
-
-				// Clamp scroll so you don't scroll past the content
-				if (scrollDistance > maxScroll) scrollDistance = maxScroll;
-
-				textScroll.style.transform = `translateY(-${scrollDistance}px)`;
-
-				// Detect which paragraph is aligned near the middle of the image
-				for (let i = 0; i < paragraphs.length; i++) {
-					const para = paragraphs[i];
-					const rect = para.getBoundingClientRect();
-					const imageCenter = window.innerHeight / 2;
-
-					if (rect.top <= imageCenter && rect.bottom >= imageCenter) {
-						image.src = images[i];
-						break;
-					}
-				}
-			}
-		});
-	</script>
 </body>
 </html>
